@@ -43,11 +43,14 @@ bool isInList(unsigned int hash[5], __global unsigned int *targetList, size_t nu
     bool found = false;
 
     for(size_t i = 0; i < numTargets; i++) {
-        if((hash[0] == targetList[5 * i]) && ((hash[1] & 0x000000f0) == (targetList[5 * i + 1] & 0x000000f0))) {
+
+        // solo comparo el primer hash y dos hex del segundo.
+        //
+        // if((hash[0] == targetList[5 * i]) && ((hash[1] & 0x000000f0) == (targetList[5 * i + 1] & 0x000000f0))) {
+        if( hash[0] == targetList[5 * i] ) {
             found = true;
         }
     }
-
     return found;
 }
 
@@ -232,7 +235,6 @@ void setResultFound(int idx, bool compressed, uint256_t x, uint256_t y, unsigned
     atomicListAdd(results, numResults, &r);
 }
 
-/*
 void doIteration(
     size_t totalPoints,
     int compression,
@@ -258,6 +260,8 @@ void doIteration(
     int i = gid;
     int batchIdx = 0;
 
+    // Check results
+    //
     for(; i < totalPoints; i += dim) {
         uint256_t x;
 
@@ -284,95 +288,34 @@ void doIteration(
                 setResultFound(i, true, x, y, digest, results, numResults);
             }
         }
-
-        beginBatchAdd256k(incX, x, chain, i, batchIdx, &inverse);
-        batchIdx++;
     }
 
-    inverse = doBatchInverse256k(inverse);
 
-    i -= dim;
-
-    for(;  i >= 0; i -= dim) {
-
-        uint256_t newX;
-        uint256_t newY;
-        batchIdx--;
-        completeBatchAdd256k(incX, incY, xPtr, yPtr, i, batchIdx, chain, &inverse, &newX, &newY);
-
-        xPtr[i] = newX;
-        yPtr[i] = newY;
-    }
-}
-*/
-
-void doIteration(
-    size_t totalPoints,
-    int compression,
-    __global uint256_t* chain,
-    __global uint256_t* xPtr,
-    __global uint256_t* yPtr,
-    __global uint256_t* incXPtr,
-    __global uint256_t* incYPtr,
-    __global unsigned int *targetList,
-    size_t numTargets,
-    ulong mask,
-    __global CLDeviceResult *results,
-    __global unsigned int *numResults)
-{
-    int gid = get_local_size(0) * get_group_id(0) + get_local_id(0);
-    int dim = get_global_size(0);
-    uint256_t incX = *incXPtr;
-    uint256_t incY = *incYPtr;
-
-    int j = gid;
-    for(; j < totalPoints; j += dim) {
-        
-        uint256_t x = xPtr[j];
-
-        if((compression == UNCOMPRESSED) || (compression == BOTH)) {
-            
-            uint256_t y = yPtr[j];
-            unsigned int digest[5];
-            
-            hashPublicKey(x, y, digest);
-            if(checkHash(digest, targetList, numTargets, mask)) {
-                setResultFound(j, false, x, y, digest, results, numResults);
-            }
-        }
-        if((compression == COMPRESSED) || (compression == BOTH)) {
-            
-            uint256_t y = yPtr[j];
-            unsigned int digest[5];
-            
-            hashPublicKeyCompressed(x, readLSW256k(yPtr, j), digest);
-            if(checkHash(digest, targetList, numTargets, mask)) {
-                setResultFound(j, true, x, y, digest, results, numResults);
-            }
-        }
-    }
-
-    // Multiply together all (_Gx - x) and then invert
-    uint256_t inverse = { {0,0,0,0,0,0,0,1} };
-    int i = gid;
-    int batchIdx = 0;
     for(; i < totalPoints; i += dim) {
         uint256_t x;
+
         x = xPtr[i];
+
         beginBatchAdd256k(incX, x, chain, i, batchIdx, &inverse);
         batchIdx++;
     }
+
     inverse = doBatchInverse256k(inverse);
+
     i -= dim;
+
     for(;  i >= 0; i -= dim) {
+
         uint256_t newX;
         uint256_t newY;
         batchIdx--;
         completeBatchAdd256k(incX, incY, xPtr, yPtr, i, batchIdx, chain, &inverse, &newX, &newY);
+
         xPtr[i] = newX;
         yPtr[i] = newY;
     }
 }
+
 
 void doIterationWithDouble(
     size_t totalPoints,
