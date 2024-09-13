@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.34407.143
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "secp256k1lib", "secp256k1lib\secp256k1lib.vcxproj", "{BFF4B5FE-C2C5-4384-8941-CD6CB29E78C6}"
 EndProject
@@ -120,9 +120,11 @@ Global
 		{34042455-D274-432D-9134-C9EA41FD1B54}.Release|x86.ActiveCfg = Release|Win32
 		{34042455-D274-432D-9134-C9EA41FD1B54}.Release|x86.Build.0 = Release|Win32
 		{D77642A9-365C-420C-A726-469649D2927E}.Debug|x64.ActiveCfg = Debug|x64
+		{D77642A9-365C-420C-A726-469649D2927E}.Debug|x64.Build.0 = Debug|x64
 		{D77642A9-365C-420C-A726-469649D2927E}.Debug|x86.ActiveCfg = Debug|Win32
 		{D77642A9-365C-420C-A726-469649D2927E}.Debug|x86.Build.0 = Debug|Win32
 		{D77642A9-365C-420C-A726-469649D2927E}.Release|x64.ActiveCfg = Release|x64
+		{D77642A9-365C-420C-A726-469649D2927E}.Release|x64.Build.0 = Release|x64
 		{D77642A9-365C-420C-A726-469649D2927E}.Release|x86.ActiveCfg = Release|Win32
 		{D77642A9-365C-420C-A726-469649D2927E}.Release|x86.Build.0 = Release|Win32
 		{7AE5E38D-5731-404E-A4F3-229ADF981EFC}.Debug|x64.ActiveCfg = Debug|x64
@@ -134,9 +136,11 @@ Global
 		{7AE5E38D-5731-404E-A4F3-229ADF981EFC}.Release|x86.ActiveCfg = Release|Win32
 		{7AE5E38D-5731-404E-A4F3-229ADF981EFC}.Release|x86.Build.0 = Release|Win32
 		{EADAAA54-E304-4656-8263-E5E688FF323D}.Debug|x64.ActiveCfg = Debug|x64
+		{EADAAA54-E304-4656-8263-E5E688FF323D}.Debug|x64.Build.0 = Debug|x64
 		{EADAAA54-E304-4656-8263-E5E688FF323D}.Debug|x86.ActiveCfg = Debug|Win32
 		{EADAAA54-E304-4656-8263-E5E688FF323D}.Debug|x86.Build.0 = Debug|Win32
 		{EADAAA54-E304-4656-8263-E5E688FF323D}.Release|x64.ActiveCfg = Release|x64
+		{EADAAA54-E304-4656-8263-E5E688FF323D}.Release|x64.Build.0 = Release|x64
 		{EADAAA54-E304-4656-8263-E5E688FF323D}.Release|x86.ActiveCfg = Release|Win32
 		{EADAAA54-E304-4656-8263-E5E688FF323D}.Release|x86.Build.0 = Release|Win32
 		{CA46856A-1D1E-4F6F-A69C-6707D540BF36}.Debug|x64.ActiveCfg = Debug|x64

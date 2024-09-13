@@ -232,9 +232,9 @@ void CudaKeySearchDevice::getResultsInternal()
         struct CudaDeviceResult *rPtr = &((struct CudaDeviceResult *)ptr)[i];
 
         // might be false-positive
-        // if(!isTargetInList(rPtr->digest)) {
-        //    continue;
-        // }
+        if(!isTargetInList(rPtr->digest)) {
+            continue;
+        }
         actualCount++;
 
         KeySearchResult minerResult;

@@ -282,7 +282,7 @@ __device__ bool checkBloomFilter64(const unsigned int hash[5])
 	return foundMatch;
 }
 
-/*
+
 __device__ bool checkHash(const unsigned int hash[5])
 {
 	bool foundMatch = false;
@@ -299,30 +299,6 @@ __device__ bool checkHash(const unsigned int hash[5])
 			}
 
 			foundMatch |= equal;
-		}
-	}
-
-	return foundMatch;
-}
-*/
-
-__device__ bool checkHash(const unsigned int hash[5])
-{
-	bool foundMatch = false;
-
-	if(*_USE_BLOOM_FILTER == 1) {
-		return checkBloomFilter(hash);
-	} else if(*_USE_BLOOM_FILTER == 2) {
-		return checkBloomFilter64(hash);
-	} else {
-		for(int j = 0; j < *_NUM_TARGET_HASHES; j++) {
-			bool equal = false;
-
-        		if((hash[0] == _TARGET_HASH[j][0]) && ((hash[1] & 0x000000f0) == (_TARGET_HASH[j][1] & 0x000000f0))) {
-            			equal = true;
-        		}
-	
-			foundMatch = equal;
 		}
 	}
 
